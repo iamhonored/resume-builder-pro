@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Builder - AI Resume Pro</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Include libraries for PDF and DOCX generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/7.8.0/docx.min.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">AI Resume Pro</div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="builder.html" class="active">Resume Builder</a>
+                <a href="templates.html">Templates</a>
+                <a href="privacy.html">Privacy</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="builder-main">
+        <div class="container">
+            <div class="builder-grid">
+                <!-- Left side: Input Form -->
+                <div class="input-section">
+                    <h2>Your Information</h2>
+                    <form id="resumeForm">
+                        <div class="form-group">
+                            <label for="fullName">Full Name*</label>
+                            <input type="text" id="fullName" required placeholder="John Doe">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email*</label>
+                            <input type="email" id="email" required placeholder="john.doe@email.com">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Phone</label>
+                            <input type="tel" id="phone" placeholder="(555) 123-4567">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="location">Location</label>
+                            <input type="text" id="location" placeholder="New York, NY">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="targetRole">Target Job Role*</label>
+                            <input type="text" id="targetRole" required placeholder="Software Engineer">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="skills">Skills (comma-separated)*</label>
+                            <textarea id="skills" rows="3" required placeholder="JavaScript, Python, React, Node.js"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="experience">Experience Summary*</label>
+                            <textarea id="experience" rows="5" required placeholder="Describe your work experience, achievements, and responsibilities..."></textarea>
+                        </div>
+
+                        <!-- NEW EDUCATION SECTION -->
+                        <div class="form-group">
+                            <label for="education">Education</label>
+                            <textarea id="education" rows="4" placeholder="Bachelor of Science in Computer Science
+University of Example, 2018-2022
+GPA: 3.8/4.0
+Relevant coursework: Data Structures, Algorithms, Web Development"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="jobDescription">Job Description (paste here for tailored suggestions)</label>
+                            <textarea id="jobDescription" rows="5" placeholder="Paste the job description you're applying for..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="template">Choose Template</label>
+                            <select id="template">
+                                <option value="classic">Classic</option>
+                                <option value="modern">Modern</option>
+                                <option value="tech">Tech Professional</option>
+                                <option value="creative">Creative</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="generate-btn">Generate AI Resume</button>
+                    </form>
+
+                    <!-- ATS Score Section -->
+                    <div id="atsScore" class="ats-score hidden">
+                        <h3>ATS Compatibility Score</h3>
+                        <div class="score-meter">
+                            <div class="score-fill" id="scoreFill"></div>
+                        </div>
+                        <p class="score-text"><span id="scoreValue">0</span>%</p>
+                        <div id="atsFeedback"></div>
+                    </div>
+                </div>
+
+                <!-- Right side: Preview -->
+                <div class="preview-section">
+                    <div class="preview-header">
+                        <h2>Resume Preview</h2>
+                        <div class="download-buttons hidden" id="downloadButtons">
+                            <button onclick="downloadPDF()" class="download-btn">📄 PDF</button>
+                            <button onclick="downloadDOCX()" class="download-btn">📝 DOCX</button>
+                            <button onclick="downloadTXT()" class="download-btn">📋 TXT</button>
+                        </div>
+                    </div>
+                    <div id="resumePreview" class="resume-preview">
+                        <p class="placeholder-text">Fill out the form and click "Generate AI Resume" to see your resume here</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- API Key Modal -->
+    <div id="apiKeyModal" class="modal">
+        <div class="modal-content">
+            <h2>Enter Your Gemini API Key</h2>
+            <p>To use this resume builder, you need a Gemini API key. Your key is stored only in your browser and never sent to our servers.</p>
+            <input type="password" id="apiKeyInput" placeholder="Enter your Gemini API key">
+            <div class="modal-buttons">
+                <a href="https://makersuite.google.com/app/apikey" target="_blank" class="link-btn">Get API Key</a>
+                <button onclick="saveAPIKey()" class="save-btn">Save & Continue</button>
+            </div>
+            <p class="privacy-note">🔒 Your API key is stored locally and never leaves your browser</p>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay hidden">
+        <div class="loader"></div>
+        <p>AI is crafting your perfect resume...</p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
